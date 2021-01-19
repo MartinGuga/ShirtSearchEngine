@@ -49,9 +49,8 @@ namespace ConstructionLine.CodingChallenge
             {
                 _colorCounts.Add(new ColorCount
                 {
-                    Count = _shirts.Count(s => s.Color == color
-                                               && (!options.Sizes.Any() ||
-                                                   options.Sizes.Select(c => c.Id).Contains(s.Size.Id))),
+                    Count = _shirts.Count(c => c.Color.Id == color.Id
+                                               && (!options.Sizes.Any() || options.Sizes.Select(s => s.Id).Contains(c.Size.Id))),
                     Color = color
                 });
             });
