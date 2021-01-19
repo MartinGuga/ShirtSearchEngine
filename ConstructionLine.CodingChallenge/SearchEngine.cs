@@ -14,6 +14,10 @@ namespace ConstructionLine.CodingChallenge
         public SearchEngine(List<Shirt> shirts)
         {
             _shirts = shirts;
+            _listOfShirts = new List<Shirt>();
+            _sizeCounts = new List<SizeCount>();
+            _colorCounts = new List<ColorCount>();
+
         }
 
 
@@ -31,14 +35,12 @@ namespace ConstructionLine.CodingChallenge
                 }
             }
 
-
             Parallel.ForEach(Size.All, size =>
             {
                 _sizeCounts.Add(new SizeCount
                 {
-                    Count = _shirts.Count(s => s.Size == size
-                                               && (!options.Colors.Any() ||
-                                                   options.Colors.Select(c => c.Id).Contains(s.Color.Id))),
+                    Count = _shirts.Count(s => s.Size.Id == size.Id
+                                               && (!options.Colors.Any() || options.Colors.Select(c => c.Id).Contains(s.Color.Id))),
                     Size = size
                 });
             });
@@ -54,8 +56,13 @@ namespace ConstructionLine.CodingChallenge
                 });
             });
 
+            
+
             return new SearchResults
             {
+                Shirts = _listOfShirts,
+                SizeCounts = _sizeCounts,
+                ColorCounts = _colorCounts
             };
         }
     }
