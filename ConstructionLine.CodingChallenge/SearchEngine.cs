@@ -9,6 +9,7 @@ namespace ConstructionLine.CodingChallenge
         private readonly List<Shirt> _shirts;
         private readonly List<SizeCount>_sizeCounts;
         private readonly List<ColorCount>_colorCounts;
+        private readonly List<Shirt> _listOfShirts;
 
         public SearchEngine(List<Shirt> shirts)
         {
@@ -18,6 +19,19 @@ namespace ConstructionLine.CodingChallenge
 
         public SearchResults Search(SearchOptions options)
         {
+            foreach (var shirt in _shirts)
+            {
+                foreach (var color in options.Colors)
+                {
+                    if (color.Name == shirt.Name)
+                    {
+                        _listOfShirts.Add(shirt);
+                    }
+
+                }
+            }
+
+
             Parallel.ForEach(Size.All, size =>
             {
                 _sizeCounts.Add(new SizeCount
