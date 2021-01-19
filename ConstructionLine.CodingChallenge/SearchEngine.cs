@@ -7,7 +7,8 @@ namespace ConstructionLine.CodingChallenge
     public class SearchEngine
     {
         private readonly List<Shirt> _shirts;
-        private readonly  List<SizeCount>_sizeCounts;
+        private readonly List<SizeCount>_sizeCounts;
+        private readonly List<ColorCount>_colorCounts;
 
         public SearchEngine(List<Shirt> shirts)
         {
@@ -25,6 +26,17 @@ namespace ConstructionLine.CodingChallenge
                                                && (!options.Colors.Any() ||
                                                    options.Colors.Select(c => c.Id).Contains(s.Color.Id))),
                     Size = size
+                });
+            });
+
+            Parallel.ForEach(Color.All, color =>
+            {
+                _colorCounts.Add(new ColorCount
+                {
+                    Count = _shirts.Count(s => s.Color == color
+                                               && (!options.Sizes.Any() ||
+                                                   options.Sizes.Select(c => c.Id).Contains(s.Size.Id))),
+                    Color = color
                 });
             });
 
